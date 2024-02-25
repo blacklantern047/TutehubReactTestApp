@@ -16,8 +16,11 @@ const authConfig: TAuthConfig = {
   tokenEndpoint: Urls.tokenEndpoint,
   redirectUri: Urls.redirectUri,
   onRefreshTokenExpire: (event: TRefreshTokenExpiredEvent) => window.confirm('Session expired. Refresh page to continue using the site?') && event.login(),
-    autoLogin: true,
-    refreshTokenExpiresIn: 1708862080
+    autoLogin: false,
+    refreshTokenExpiresIn: 1708862080,
+    preLogin: () => localStorage.setItem('preLoginPath', window.location.pathname),
+  postLogin: () => window.location.replace(localStorage.getItem('preLoginPath') || ''),
+    decodeToken: true
 
 }
 

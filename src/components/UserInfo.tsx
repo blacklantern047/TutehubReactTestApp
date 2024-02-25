@@ -5,7 +5,6 @@ import axios from "axios";
 import {Urls} from "../config";
 const UserInfo = () =>{
   const { tokenData, token, logOut, idToken, error, login }: IAuthContext = useContext(AuthContext)
-
     const [apiResponse, setApiResponse] = useState(null);
     useEffect(()=>{
         axios.get(Urls.countApi, {
@@ -16,7 +15,6 @@ const UserInfo = () =>{
             setApiResponse(res.data);
         }).catch(()=>{
             setApiResponse(null);
-            alert("Session Expired. Please Login Again");
             login();
         })
     }, [token]);
