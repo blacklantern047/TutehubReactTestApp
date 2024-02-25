@@ -1,15 +1,39 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {AuthContext, IAuthContext} from "react-oauth2-code-pkce";
+import {AuthContext, IAuthContext, TRefreshTokenExpiredEvent} from "react-oauth2-code-pkce";
+import axios from "axios";
+import {Urls} from "../config";
 const UserInfo = () =>{
-  const { tokenData, token, logOut, idToken, error }: IAuthContext = useContext(AuthContext)
-    const navigate = useNavigate();
-    const login = () =>{
-        navigate("/login");
-    }
+  const { tokenData, token, logOut, idToken, error, login }: IAuthContext = useContext(AuthContext)
+
+    const [apiResponse, setApiResponse] = useState(null);
+    useEffect(()=>{
+        axios.get(Urls.countApi, {
+            headers: {
+                "Authorization": `Bearer ${token.toString()}`
+            }
+        }).then(res=>{
+            setApiResponse(res.data);
+        }).catch(()=>{
+            setApiResponse(null);
+            alert("Session Expired. Please Login Again");
+            login();
+        })
+    }, [token]);
+
+    if (error) {
+    return (
+      <>
+        <div style={{ color: 'red' }}>An error occurred during authentication: {error}</div>
+        <button type='button' onClick={() => logOut()}>
+          Logout
+        </button>
+      </>
+    )
+  }
     return(
         <>
-            {token ? (
+            {token && apiResponse? (
         <div
           style={{
             display: 'flex',
@@ -32,21 +56,11 @@ const UserInfo = () =>{
               alignItems: 'center',
             }}
           >
-            <p>Welcome, John Doe!</p>
-
-            <p>Use this token to authenticate yourself</p>
-            <pre
-              style={{
-                width: '400px',
-                margin: '10px',
-                padding: '5px',
-                border: 'black 2px solid',
-                wordBreak: 'break-all',
-                whiteSpace: 'break-spaces',
-              }}
-            >
-              {token}
-            </pre>
+            <p>Welcome Back User!</p>
+              <br/>
+              <h1>API Response</h1>
+              <br/>
+              <pre>{JSON.stringify(apiResponse, null, 2) }</pre>
           </div>
         </div>
       ) : (
@@ -74,7 +88,7 @@ const UserInfo = () =>{
           >
             <p>Please login to continue</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='button' style={{ width: '100px' }} onClick={login}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='button' style={{ width: '100px' }} onClick={() =>login()}>
               Login
             </button>
           </div>

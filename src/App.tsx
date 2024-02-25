@@ -6,7 +6,7 @@ const App = () => {
     const navigate = useNavigate();
 
     const login = () =>{
-        navigate("/login");
+        navigate("/authorized");
     }
 
   return (

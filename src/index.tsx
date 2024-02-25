@@ -4,18 +4,20 @@ import './index.css';
 import App from './App';
 import { AuthContext, AuthProvider, TAuthConfig, TRefreshTokenExpiredEvent } from "react-oauth2-code-pkce"
 import reportWebVitals from './reportWebVitals';
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, Routes, useRoutes} from "react-router-dom";
 import CommunityPage from "./components/CommunityPage";
 import UserInfo from "./components/UserInfo";
 import CoursePage from "./components/CoursePage";
+import {Paths, Urls} from "./config";
 
 const authConfig: TAuthConfig = {
   clientId: 'e5tzviowoxgwbbzk7pau',
-  authorizationEndpoint: 'https://cowpte.com:8702/oauth2/authorize',
-  tokenEndpoint: 'https://cowpte.com:8702/oauth2/token',
-  redirectUri: 'http://localhost:3000/authorized',
+  authorizationEndpoint: Urls.authorizationEndpoint,
+  tokenEndpoint: Urls.tokenEndpoint,
+  redirectUri: Urls.redirectUri,
   onRefreshTokenExpire: (event: TRefreshTokenExpiredEvent) => window.confirm('Session expired. Refresh page to continue using the site?') && event.login(),
     autoLogin: true,
+    refreshTokenExpiresIn: 1708862080
 
 }
 
@@ -24,19 +26,19 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter>
             <Routes>
-                <Route path="/"  element={<App/>}></Route>
-                <Route path="/courses" element={<CoursePage/>}></Route>
-                <Route path="/community" element={<CommunityPage/>}></Route>
-                <Route path="/login" element={
+                <Route path={Paths.homePath}  element={<App/>}></Route>
+                <Route path={Paths.coursePath} element={<CoursePage/>}></Route>
+                <Route path={Paths.communityPath} element={<CommunityPage/>}></Route>
+                <Route path={Paths.loginPath} element={
                     <AuthProvider authConfig={authConfig}>
                         <UserInfo />
                     </AuthProvider>
                 }>
                 </Route>
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
   </React.StrictMode>
 );
 
