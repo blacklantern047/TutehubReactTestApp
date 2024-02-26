@@ -2,7 +2,11 @@
 
 This is a test react app for TuteHub
 
+Latest Video with Navbar and Login/Logout Functionality (Using a global context to maintain a state isLoggedIn):
+https://drive.google.com/file/d/1t_IRr4hZ1sqG1TRmvzENq3BkQHjpkQOq/view?usp=sharing
+
 Videos:
+https://drive.google.com/file/d/1t_IRr4hZ1sqG1TRmvzENq3BkQHjpkQOq/view?usp=sharing
 https://drive.google.com/file/d/1C3TN9aSdboUPv-MXGPT0vkgv9lvR2o6D/view?usp=sharing
 https://drive.google.com/file/d/15bm82FNAGsxp_g4DoHi7mw---OxUjDkH/view?usp=sharing
 
