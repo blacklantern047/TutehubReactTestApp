@@ -9,7 +9,7 @@ import CommunityPage from "./components/CommunityPage";
 import UserInfo from "./components/UserInfo";
 import CoursePage from "./components/CoursePage";
 import {Paths, Urls} from "./config";
-
+import Navbar from "./components/Navbar"
 const authConfig: TAuthConfig = {
   clientId: 'e5tzviowoxgwbbzk7pau',
   authorizationEndpoint: Urls.authorizationEndpoint,
@@ -30,6 +30,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+        <Navbar />
             <Routes>
                 <Route path={Paths.homePath}  element={<App/>}></Route>
                 <Route path={Paths.coursePath} element={<CoursePage/>}></Route>
