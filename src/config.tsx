@@ -2,7 +2,8 @@ export const Paths = {
   homePath: "/",
   coursePath: "/courses",
   communityPath: "/community",
-  loginPath: "/authorized"
+  loginPath: "/authorized",
+  logoutPath: "/logout"
 }
 
 export const Urls = {

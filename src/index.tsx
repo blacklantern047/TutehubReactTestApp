@@ -8,8 +8,10 @@ import {BrowserRouter, HashRouter, Route, Routes, useRoutes} from "react-router-
 import CommunityPage from "./components/CommunityPage";
 import UserInfo from "./components/UserInfo";
 import CoursePage from "./components/CoursePage";
+import LogoutPage from "./components/LogoutPage";
 import {Paths, Urls} from "./config";
 import Navbar from "./components/Navbar"
+import {AuthWrapper} from "./AuthWrapper";
 const authConfig: TAuthConfig = {
   clientId: 'e5tzviowoxgwbbzk7pau',
   authorizationEndpoint: Urls.authorizationEndpoint,
@@ -30,18 +32,19 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+        <AuthWrapper>
+            <AuthProvider authConfig={authConfig}>
         <Navbar />
             <Routes>
                 <Route path={Paths.homePath}  element={<App/>}></Route>
                 <Route path={Paths.coursePath} element={<CoursePage/>}></Route>
                 <Route path={Paths.communityPath} element={<CommunityPage/>}></Route>
-                <Route path={Paths.loginPath} element={
-                    <AuthProvider authConfig={authConfig}>
-                        <UserInfo />
-                    </AuthProvider>
-                }>
-                </Route>
+                <Route path={Paths.loginPath} element={<UserInfo />}></Route>
+                <Route path={Paths.logoutPath} element={<LogoutPage />}> </Route>
             </Routes>
+            </AuthProvider>
+        </AuthWrapper>
+
         </BrowserRouter>
   </React.StrictMode>
 );

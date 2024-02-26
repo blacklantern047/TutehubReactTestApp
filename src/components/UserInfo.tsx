@@ -3,8 +3,10 @@ import {useNavigate} from "react-router-dom";
 import {AuthContext, IAuthContext, TRefreshTokenExpiredEvent} from "react-oauth2-code-pkce";
 import axios from "axios";
 import {Urls} from "../config";
+import {useAuth} from "../AuthWrapper";
 const UserInfo = () =>{
   const { tokenData, token, logOut, idToken, error, login }: IAuthContext = useContext(AuthContext)
+    const { isLoggedIn, loginGlobal } = useAuth();
     const [apiResponse, setApiResponse] = useState(null);
     useEffect(()=>{
         axios.get(Urls.countApi, {
@@ -13,6 +15,7 @@ const UserInfo = () =>{
             }
         }).then(res=>{
             setApiResponse(res.data);
+            loginGlobal();
         }).catch(()=>{
             setApiResponse(null);
             login();
@@ -84,11 +87,11 @@ const UserInfo = () =>{
               alignItems: 'center',
             }}
           >
-            <p>Please login to continue</p>
+            {/*<p>Please login to continue</p>*/}
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='button' style={{ width: '100px' }} onClick={() =>login()}>
-              Login
-            </button>
+            {/*<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='button' style={{ width: '100px' }} onClick={() =>login()}>*/}
+            {/*  Login*/}
+            {/*</button>*/}
           </div>
         </div>
       )}
